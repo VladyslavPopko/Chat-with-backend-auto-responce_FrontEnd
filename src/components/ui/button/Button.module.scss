@@ -6,11 +6,15 @@
 	color: var(--selected-color);
 	background: var(--secondary-color);
 	cursor: pointer;
-	transition: color var(--transition-ms), background var(--transition-ms);
+	transition: color var(--transition-ms), background var(--transition-ms),
+		border var(--transition-ms);
 	font-family: 'Montserrat', sans-serif;
 	width: 100%;
 	&:hover {
 		color: var(--secondary-color);
 		background: var(--selected-color);
+	}
+	&:focus {
+		border: 1px solid var(--selected-color);
 	}
 }

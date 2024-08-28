@@ -1,8 +1,9 @@
 import cn from 'classnames'
+import { FieldValues } from 'react-hook-form'
 import { IInput } from '../../../types/ui.types'
 import styles from './Input.module.scss'
 
-const Input = (input: IInput) => {
+const Input = <T extends FieldValues>(input: IInput<T>) => {
 	return (
 		<label
 			htmlFor={input.name}
@@ -12,9 +13,23 @@ const Input = (input: IInput) => {
 				<img className={styles.img} src={input.img} draggable='false' />
 			)}
 			<input
+				autoFocus={input.autoFocus}
+				type={input.type}
+				id={input.name}
 				placeholder={input.placeholder}
 				className={cn(styles.input, input.classNameInput)}
-				id={input.name}
+				{...(input.register && input.registerName
+					? input.register(input.registerName, {
+							required:
+								input.required && input.requiredText
+									? input.requiredText
+									: 'This field is required',
+							pattern:
+								input.pattern && input.patternText
+									? { value: input.pattern, message: input.patternText }
+									: undefined,
+					  })
+					: {})}
 			/>
 		</label>
 	)
