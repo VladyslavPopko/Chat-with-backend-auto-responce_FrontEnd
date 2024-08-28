@@ -1,13 +1,15 @@
-import { PropsWithChildren } from 'react'
+import { IMainLayout } from '../../types/layout.types'
 import styles from './Layout.module.scss'
-import MainBody from './main-body/MainBody'
-import MainHeader from './main-header/MainHeader'
+import MainLayout from './main/MainLayout'
+import MenuLayout from './menu/MenuLayout'
 
-const Layout = ({ children }: PropsWithChildren) => {
+const Layout = ({ children, text, image }: IMainLayout) => {
 	return (
 		<div className={styles.section}>
-			<MainHeader />
-			<MainBody>{children}</MainBody>
+			<MenuLayout />
+			<MainLayout text={text} image={image}>
+				{children}
+			</MainLayout>
 		</div>
 	)
 }

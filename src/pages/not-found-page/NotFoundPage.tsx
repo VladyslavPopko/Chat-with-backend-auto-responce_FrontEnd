@@ -1,9 +1,12 @@
+import Layout from '../../components/layout/Layout'
 import NotFound from '../../components/screen/not-found/NotFound'
 
 const NotFoundPage = () => {
 	return (
 		<>
-			<NotFound />
+			<Layout text='Auth Page'>
+				<NotFound />
+			</Layout>
 		</>
 	)
 }

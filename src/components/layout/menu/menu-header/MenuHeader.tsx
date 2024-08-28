@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
-import Input from '../../ui/input/Input'
-import styles from './MainHeader.module.scss'
-const MainHeader = () => {
+import Input from '../../../ui/input/Input'
+import styles from './MenuHeader.module.scss'
+const MenuHeader = () => {
 	return (
 		<div className={styles.section}>
 			<div className={styles.header}>
@@ -24,4 +24,4 @@ const MainHeader = () => {
 	)
 }
 
-export default MainHeader
+export default MenuHeader
