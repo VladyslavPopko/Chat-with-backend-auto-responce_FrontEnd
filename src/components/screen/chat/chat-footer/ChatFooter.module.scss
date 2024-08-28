@@ -1,0 +1,20 @@
+.section {
+	padding: 15px;
+	box-shadow: 0 -1px 4px 0 var(--primary-color);
+	width: 100%;
+	background-color: var(--primary-background);
+}
+.img {
+	padding: 5px;
+	width: 30px;
+	border-radius: var(--section-border-radius);
+	transition: background-color var(--transition-ms);
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--background-hover);
+	}
+}
+.button {
+	display: none;
+}

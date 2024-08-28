@@ -1,9 +1,12 @@
 import Layout from '../../components/layout/Layout'
+import Home from '../../components/screen/home/Home'
 
 const HomePage = () => {
 	return (
 		<>
-			<Layout text='Home Page'>Home Page</Layout>
+			<Layout text='Home Page'>
+				<Home />
+			</Layout>
 		</>
 	)
 }

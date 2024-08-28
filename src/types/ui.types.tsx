@@ -15,6 +15,9 @@ export interface IInput<T extends FieldValues = FieldValues> {
 	requiredText?: string
 	imgLeft?: string
 	imgRight?: string
+	classNameImgLeft?: string
+	classNameImgRight?: string
+	onClickImgRight?: () => void
 }
 
 export interface IButton {

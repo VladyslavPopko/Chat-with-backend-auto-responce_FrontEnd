@@ -12,3 +12,7 @@ export interface IFormProfile {
 	email: string
 	image?: string
 }
+
+export interface IFormMessage {
+	message: string
+}
