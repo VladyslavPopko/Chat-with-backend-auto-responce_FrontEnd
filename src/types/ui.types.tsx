@@ -13,13 +13,15 @@ export interface IInput<T extends FieldValues = FieldValues> {
 	patternText?: string
 	required?: boolean
 	requiredText?: string
-	img?: string
+	imgLeft?: string
+	imgRight?: string
 }
 
 export interface IButton {
 	text: string
 	type?: string
 	className?: string
+	onClick?: () => void
 }
 
 export interface IErrorMessage {

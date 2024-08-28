@@ -16,7 +16,7 @@ const Auth = () => {
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-			<Input
+			<Input<IFormAuth>
 				type='text'
 				register={register}
 				registerName='email'
@@ -29,7 +29,7 @@ const Auth = () => {
 			{formState.errors.email?.message && (
 				<ErrorMessage text={formState.errors.email.message} />
 			)}
-			<Input
+			<Input<IFormAuth>
 				type='password'
 				register={register}
 				registerName='password'

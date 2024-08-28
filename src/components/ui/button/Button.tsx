@@ -4,7 +4,10 @@ import styles from './Button.module.scss'
 
 const Button = (button: IButton) => {
 	return (
-		<button className={cn(styles.button, button.className)}>
+		<button
+			onClick={button.onClick}
+			className={cn(styles.button, button.className)}
+		>
 			{button.text}
 		</button>
 	)

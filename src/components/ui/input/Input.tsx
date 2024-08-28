@@ -9,8 +9,8 @@ const Input = <T extends FieldValues>(input: IInput<T>) => {
 			htmlFor={input.name}
 			className={cn(styles.section, input.classNameSection)}
 		>
-			{input.img && (
-				<img className={styles.img} src={input.img} draggable='false' />
+			{input.imgLeft && (
+				<img className={styles.img} src={input.imgLeft} draggable='false' />
 			)}
 			<input
 				autoFocus={input.autoFocus}
@@ -31,6 +31,9 @@ const Input = <T extends FieldValues>(input: IInput<T>) => {
 					  })
 					: {})}
 			/>
+			{input.imgRight && (
+				<img className={styles.img} src={input.imgRight} draggable='false' />
+			)}
 		</label>
 	)
 }

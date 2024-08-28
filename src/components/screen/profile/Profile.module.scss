@@ -1,0 +1,15 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	&_item {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+}
+
+.button {
+	padding: 10px;
+	border: 1px solid var(--primary-color);
+}
