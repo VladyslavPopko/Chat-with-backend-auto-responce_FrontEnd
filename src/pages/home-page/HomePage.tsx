@@ -1,10 +1,13 @@
-import Home from '../../components/screen/home/Home'
+import Layout from '../../components/layout/Layout'
+import ChatList from '../../components/screen/chat-list/ChatList'
 import './HomePage.module.scss'
 
 const HomePage = () => {
 	return (
 		<>
-			<Home />
+			<Layout>
+				<ChatList />
+			</Layout>
 		</>
 	)
 }

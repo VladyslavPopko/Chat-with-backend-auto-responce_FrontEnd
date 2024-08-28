@@ -1,0 +1,16 @@
+.button {
+	outline: none;
+	padding: 5px;
+	border: 0;
+	border-radius: var(--button-border-radius);
+	color: var(--selected-color);
+	background: var(--secondary-color);
+	cursor: pointer;
+	transition: color var(--transition-ms), background var(--transition-ms);
+	font-family: 'Montserrat', sans-serif;
+	width: 100%;
+	&:hover {
+		color: var(--secondary-color);
+		background: var(--selected-color);
+	}
+}

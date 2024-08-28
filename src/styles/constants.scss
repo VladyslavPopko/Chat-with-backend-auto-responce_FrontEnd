@@ -1,0 +1,19 @@
+:root {
+	--primary-color: rgb(167, 165, 165);
+	--secondary-color: rgb(241, 236, 236);
+	--selected-color: rgb(63, 175, 219);
+	--primary-background: rgb(246, 246, 246);
+
+	--background-hover: rgba(180, 242, 245, 0.5);
+
+	--primary-box-shadow: 0px 0px 4px 0 var(--primary-color);
+	--bottom-box-shadow: 0 15px 30px 10px rgba(0, 0, 0, 0.5);
+	--selected-box-shadow: 0 0px 4px 0px var(--selected-color);
+
+	--button-border-radius: 10px;
+	--section-border-radius: 10px;
+
+	--transition-ms: 400ms ease;
+
+	--font-family: 'Montserrat', sans-serif;
+}

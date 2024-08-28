@@ -1,0 +1,20 @@
+.section {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	border: 1px solid var(--primary-color);
+	padding: 10px;
+	background-color: var(--secondary-color);
+	border-radius: var(--button-border-radius);
+	transition: border var(--transition-ms);
+	&:focus-within {
+		border: 1px solid var(--selected-color);
+	}
+}
+.input {
+	outline: none;
+	border: 0;
+	background-color: transparent;
+	font-family: var(--font-family);
+	width: 100%;
+}

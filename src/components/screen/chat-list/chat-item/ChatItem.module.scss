@@ -1,0 +1,14 @@
+.chat {
+	padding: 25px;
+	transition: background var(--transition-ms);
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--background-hover);
+	}
+}
+.hr {
+	width: 100%;
+	border: 1px solid var(--primary-color);
+	margin: 0;
+}
