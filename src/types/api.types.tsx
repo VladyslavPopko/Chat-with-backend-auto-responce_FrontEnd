@@ -49,5 +49,19 @@ export interface IChatDetail {
 	createdAt: string
 	updatedAt: string
 	chatUsers: IChatUser[]
-	messages: string[]
+	messages: IMessage[]
+}
+
+export interface ISendMessage {
+	text: string
+	senderId: string
+	recipientId: string
+	chatId: string
+}
+
+export interface IMessage extends ISendMessage {
+	id: string
+	isRead: boolean
+	createdAt: string
+	updatedAt: string
 }

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IChat } from '../../types/api.types'
+import { IChatUser } from '../../types/api.types'
 import { IChatsSlice } from '../../types/store.types'
 
 const initialState: IChatsSlice = {
@@ -10,11 +10,11 @@ const chatsSlice = createSlice({
 	name: 'chats',
 	initialState,
 	reducers: {
-		change: (state, { payload }: PayloadAction<IChat[]>) => {
+		changeChats: (state, { payload }: PayloadAction<IChatUser[]>) => {
 			state.chats = payload
 		},
 	},
 })
 
-export const { change } = chatsSlice.actions
+export const { changeChats } = chatsSlice.actions
 export default chatsSlice.reducer

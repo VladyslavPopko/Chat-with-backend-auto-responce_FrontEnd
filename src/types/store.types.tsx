@@ -1,4 +1,4 @@
-import { IChat, IChatDetail } from './api.types'
+import { IChatDetail, IChatUser } from './api.types'
 import { IUser } from './user.types'
 
 export interface IAuthSlice {
@@ -11,5 +11,5 @@ export interface IChatSlice {
 }
 
 export interface IChatsSlice {
-	chats: IChat[] | null
+	chats: IChatUser[] | null
 }
