@@ -2,6 +2,8 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
 import { UseCreateNewChat } from '../../../api/chat/UseCreateNewChat'
+import { UseGetUserChats } from '../../../api/chat/UseGetUserChats'
+import { changeChats } from '../../../store/slices/chatsSlice'
 import { AppDispatch, useAppSelector } from '../../../store/store'
 import { IFormNewChat } from '../../../types/form.types'
 import { IUser } from '../../../types/user.types'
@@ -15,6 +17,7 @@ const NewChat = () => {
 	const user: IUser | null = useAppSelector(state => state.auth.user)
 	const { mutate } = UseCreateNewChat()
 	const { mutate: mutateAddToChat } = UseAddUsersToChat()
+	const { mutate: mutateChats } = UseGetUserChats()
 	const { register, handleSubmit, formState } = useForm<IFormNewChat>({
 		mode: 'onChange',
 	})
@@ -23,6 +26,13 @@ const NewChat = () => {
 		mutate(data, {
 			onSuccess: responseData => {
 				if (user) mutateAddToChat({ chatId: responseData.id, users: [user.id] })
+				if (user) {
+					mutateChats(user.id, {
+						onSuccess: responseData => {
+							dispatch(changeChats(responseData.chatUsers))
+						},
+					})
+				}
 			},
 		})
 	}

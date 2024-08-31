@@ -65,3 +65,7 @@ export interface IMessage extends ISendMessage {
 	createdAt: string
 	updatedAt: string
 }
+
+export interface IFindUser {
+	id: string
+}

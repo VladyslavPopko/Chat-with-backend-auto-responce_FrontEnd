@@ -1,0 +1,14 @@
+.section {
+	padding: 15px;
+	box-shadow: var(--primary-box-shadow);
+	max-width: 50%;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	background-color: var(--primary-color);
+	border-radius: var(--button-border-radius);
+}
+.date {
+	text-align: right;
+	max-width: 50%;
+}
