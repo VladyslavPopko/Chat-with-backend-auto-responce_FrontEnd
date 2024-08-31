@@ -1,14 +1,26 @@
 .section {
-	padding: 15px;
-	box-shadow: var(--primary-box-shadow);
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 5px;
+}
+.content {
 	max-width: 50%;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
-	background-color: var(--primary-color);
+	box-shadow: var(--primary-box-shadow);
 	border-radius: var(--button-border-radius);
+	background-color: var(--primary-color);
+	padding: 15px;
+}
+.section_other_message {
+	align-items: flex-end;
+}
+.other_message {
+	background-color: var(--selected-color);
 }
 .date {
 	text-align: right;
-	max-width: 50%;
 }
