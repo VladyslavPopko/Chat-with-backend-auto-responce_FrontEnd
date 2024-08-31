@@ -21,3 +21,7 @@ export interface IFormMessage {
 export interface IFormRegister extends IFormProfile {
 	password: string
 }
+
+export interface IFormNewChat {
+	name: string
+}

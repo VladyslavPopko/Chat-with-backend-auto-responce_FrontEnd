@@ -15,3 +15,39 @@ export interface IUpdateProfile {
 	email: string
 	avatar?: string
 }
+
+export interface IChatUser {
+	id: string
+	chatId: string
+	userId: string
+	name: string
+}
+
+export interface IGetUserChats {
+	chatUsers: IChatUser[]
+}
+
+export interface IChat {
+	id: string
+	name: string
+	createdAt: string
+	updatedAt: string
+}
+
+export interface IAddUserToChat {
+	chatId: string
+	users: string[]
+}
+
+export interface IGetChatInfo {
+	id: string
+}
+
+export interface IChatDetail {
+	id: string
+	name: string
+	createdAt: string
+	updatedAt: string
+	chatUsers: IChatUser[]
+	messages: string[]
+}

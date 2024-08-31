@@ -36,6 +36,7 @@ const MenuHeader = () => {
 					</NavLink>
 				)}
 			</div>
+			<NavLink to='/new-chat'>New Chat</NavLink>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input<IFormSearch>
 					required={true}

@@ -1,3 +1,6 @@
 export interface IChatItem {
-	text: string
+	id: string
+}
+export interface IChat {
+	name: string
 }
