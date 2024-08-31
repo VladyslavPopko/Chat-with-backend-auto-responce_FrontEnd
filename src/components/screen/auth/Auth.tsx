@@ -1,6 +1,10 @@
+import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { UseLogin } from '../../../api/UseLogin'
+import { UseLogin } from '../../../api/auth/UseLogin'
+import { changeIsAuth, changeUser } from '../../../store/slices/authSlice'
+import { AppDispatch } from '../../../store/store'
 import { IFormAuth } from '../../../types/form.types'
 import Button from '../../ui/button/Button'
 import ErrorMessage from '../../ui/error-message/ErorrMessage'
@@ -8,16 +12,18 @@ import Input from '../../ui/input/Input'
 import styles from './Auth.module.scss'
 
 const Auth = () => {
+	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const { mutate } = UseLogin()
 	const { register, handleSubmit, formState } = useForm<IFormAuth>({
 		mode: 'onChange',
 	})
 
 	const onSubmit = (data: IFormAuth) => {
-		console.log(data)
 		mutate(data, {
-			onSuccess: () => {
-				console.log('yes')
+			onSuccess: responseData => {
+				Cookies.set('token', responseData.data.token)
+				dispatch(changeIsAuth(true))
+				dispatch(changeUser(responseData.data.user))
 			},
 		})
 	}

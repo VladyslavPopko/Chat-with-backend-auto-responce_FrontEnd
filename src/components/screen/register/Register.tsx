@@ -1,5 +1,9 @@
+import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
-import { UseLogin } from '../../../api/UseLogin'
+import { useDispatch } from 'react-redux'
+import { UseRegister } from '../../../api/register/UseRegister'
+import { changeIsAuth, changeUser } from '../../../store/slices/authSlice'
+import { AppDispatch } from '../../../store/store'
 import { IFormRegister } from '../../../types/form.types'
 import Button from '../../ui/button/Button'
 import ErrorMessage from '../../ui/error-message/ErorrMessage'
@@ -7,7 +11,8 @@ import Input from '../../ui/input/Input'
 import styles from './Register.module.scss'
 
 const Register = () => {
-	const { mutate } = UseLogin()
+	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { mutate } = UseRegister()
 	const { register, handleSubmit, formState } = useForm<IFormRegister>({
 		mode: 'onChange',
 	})
@@ -15,8 +20,10 @@ const Register = () => {
 	const onSubmit = (data: IFormRegister) => {
 		console.log(data)
 		mutate(data, {
-			onSuccess: () => {
-				console.log('yes')
+			onSuccess: responseData => {
+				Cookies.set('token', responseData.token)
+				dispatch(changeIsAuth(true))
+				dispatch(changeUser(responseData.user))
 			},
 		})
 	}
@@ -70,7 +77,7 @@ const Register = () => {
 				{formState.errors.surname?.message && (
 					<ErrorMessage text={formState.errors.surname.message} />
 				)}
-				<Button className={styles.button} type='submit' text='Login' />
+				<Button className={styles.button} type='submit' text='Register' />
 			</form>
 		</>
 	)

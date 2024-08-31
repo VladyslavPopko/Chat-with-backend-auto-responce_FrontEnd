@@ -4,7 +4,7 @@ import Register from '../../components/screen/register/Register'
 const RegisterPage = () => {
 	return (
 		<>
-			<Layout text='Auth Page'>
+			<Layout text='Register Page'>
 				<Register />
 			</Layout>
 		</>

@@ -1,17 +1,38 @@
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { UseUpdateProfile } from '../../../api/profile/UseUpdateProfile'
+import { changeUser } from '../../../store/slices/authSlice'
+import { AppDispatch, useAppSelector } from '../../../store/store'
 import { IFormProfile } from '../../../types/form.types'
+import { IUser } from '../../../types/user.types'
 import Button from '../../ui/button/Button'
 import ErrorMessage from '../../ui/error-message/ErorrMessage'
 import Input from '../../ui/input/Input'
 import styles from './Profile.module.scss'
 
 const Profile = () => {
+	const user: IUser | null = useAppSelector(state => state.auth.user)
+	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { mutate } = UseUpdateProfile()
 	const { register, formState, handleSubmit } = useForm<IFormProfile>({
 		mode: 'onChange',
+		defaultValues: {
+			email: user?.email,
+			name: user?.name,
+			surname: user?.surname,
+		},
 	})
 
 	const onSubmit = (data: IFormProfile) => {
-		console.log(data)
+		const dataForm = { ...data }
+		if (user?.id) {
+			dataForm.id = user.id
+			mutate(dataForm, {
+				onSuccess: responseData => {
+					dispatch(changeUser(responseData))
+				},
+			})
+		}
 	}
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

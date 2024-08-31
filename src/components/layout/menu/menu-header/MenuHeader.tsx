@@ -1,9 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../../../store/store'
 import { IFormSearch } from '../../../../types/form.types'
+import { IUser } from '../../../../types/user.types'
 import Input from '../../../ui/input/Input'
 import styles from './MenuHeader.module.scss'
 const MenuHeader = () => {
+	const user: IUser | null = useAppSelector(state => state.auth.user)
+
 	const { register, handleSubmit } = useForm<IFormSearch>()
 	const navigate = useNavigate()
 
@@ -24,9 +28,13 @@ const MenuHeader = () => {
 					draggable='false'
 				/>
 
-				<NavLink to={'/auth'} className={styles.button}>
-					Log In
-				</NavLink>
+				{user ? (
+					<p>{`Hello, ${user.name} ${user.surname}`} </p>
+				) : (
+					<NavLink to={'/auth'} className={styles.button}>
+						Log In
+					</NavLink>
+				)}
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input<IFormSearch>

@@ -7,6 +7,7 @@ export interface IFormSearch {
 }
 
 export interface IFormProfile {
+	id?: string
 	name: string
 	surname: string
 	email: string
