@@ -8,3 +8,13 @@
 	padding: 10px;
 	border: 1px solid var(--primary-color);
 }
+.button_signup {
+	padding: 10px;
+	color: var(--selected-color);
+	text-align: center;
+	display: block;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}

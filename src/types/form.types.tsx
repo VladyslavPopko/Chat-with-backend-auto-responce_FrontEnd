@@ -16,3 +16,7 @@ export interface IFormProfile {
 export interface IFormMessage {
 	message: string
 }
+
+export interface IFormRegister extends IFormProfile {
+	password: string
+}

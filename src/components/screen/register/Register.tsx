@@ -1,19 +1,18 @@
 import { useForm } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
 import { UseLogin } from '../../../api/UseLogin'
-import { IFormAuth } from '../../../types/form.types'
+import { IFormRegister } from '../../../types/form.types'
 import Button from '../../ui/button/Button'
 import ErrorMessage from '../../ui/error-message/ErorrMessage'
 import Input from '../../ui/input/Input'
-import styles from './Auth.module.scss'
+import styles from './Register.module.scss'
 
-const Auth = () => {
+const Register = () => {
 	const { mutate } = UseLogin()
-	const { register, handleSubmit, formState } = useForm<IFormAuth>({
+	const { register, handleSubmit, formState } = useForm<IFormRegister>({
 		mode: 'onChange',
 	})
 
-	const onSubmit = (data: IFormAuth) => {
+	const onSubmit = (data: IFormRegister) => {
 		console.log(data)
 		mutate(data, {
 			onSuccess: () => {
@@ -25,7 +24,7 @@ const Auth = () => {
 	return (
 		<>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-				<Input<IFormAuth>
+				<Input<IFormRegister>
 					type='text'
 					register={register}
 					registerName='email'
@@ -38,7 +37,7 @@ const Auth = () => {
 				{formState.errors.email?.message && (
 					<ErrorMessage text={formState.errors.email.message} />
 				)}
-				<Input<IFormAuth>
+				<Input<IFormRegister>
 					type='password'
 					register={register}
 					registerName='password'
@@ -49,13 +48,32 @@ const Auth = () => {
 				{formState.errors.password?.message && (
 					<ErrorMessage text={formState.errors.password.message} />
 				)}
+				<Input<IFormRegister>
+					type='name'
+					register={register}
+					registerName='name'
+					placeholder='Enter name'
+					name='name'
+					required={true}
+				/>
+				{formState.errors.name?.message && (
+					<ErrorMessage text={formState.errors.name.message} />
+				)}
+				<Input<IFormRegister>
+					type='surname'
+					register={register}
+					registerName='surname'
+					placeholder='Enter surname'
+					name='surname'
+					required={true}
+				/>
+				{formState.errors.surname?.message && (
+					<ErrorMessage text={formState.errors.surname.message} />
+				)}
 				<Button className={styles.button} type='submit' text='Login' />
 			</form>
-			<NavLink to='/register' className={styles.button_signup}>
-				Sign up
-			</NavLink>
 		</>
 	)
 }
 
-export default Auth
+export default Register
