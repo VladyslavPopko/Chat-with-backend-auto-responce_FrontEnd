@@ -29,11 +29,20 @@ const ChatItemMenu = ({
 		}
 	}
 
+	const handleAddUser = (e: MouseEvent) => {
+		if (chatInfo) {
+			e.stopPropagation()
+			setIsVisibleMenu(false)
+			dispatch(changeChat(chatInfo))
+			navigate('/add-user-to-chat')
+		}
+	}
+
 	return (
 		<div className={cn(styles.section)}>
 			<h3
 				className={cn(styles.option, styles.option_success)}
-				onClick={handleClose}
+				onClick={handleAddUser}
 			>
 				Add User
 			</h3>

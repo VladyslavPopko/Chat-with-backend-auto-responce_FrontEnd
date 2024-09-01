@@ -42,9 +42,16 @@ const Message = ({ message }: { message: IMessage }) => {
 				className={cn(styles.section, isMine && styles.section_other_message)}
 				onClick={handleCloseMenu}
 			>
-				<h2>
-					{author?.name} {author?.surname}
-				</h2>
+				<div className={styles.author}>
+					<img
+						src={author?.avatar ? author.avatar : '/images/avatar.svg'}
+						draggable={false}
+						className={styles.img}
+					/>
+					<h2>
+						{author?.name} {author?.surname}
+					</h2>
+				</div>
 				<div
 					className={cn(styles.content, isMine && styles.other_message)}
 					onContextMenu={handleContextMenu}

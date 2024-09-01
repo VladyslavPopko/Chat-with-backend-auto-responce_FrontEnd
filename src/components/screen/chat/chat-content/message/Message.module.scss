@@ -24,4 +24,15 @@
 }
 .date {
 	text-align: right;
+	font-size: 12px;
+}
+
+.img {
+	width: 30px;
+}
+.author {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	font-size: 14px;
 }

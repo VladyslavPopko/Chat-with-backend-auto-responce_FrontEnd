@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import AddUserToChatPage from './pages/add-user-to-chat-page/AddUserToChatPage'
 import AuthPage from './pages/auth-page/AuthPage'
 import ChatPage from './pages/chat-page/ChatPage'
 import HomePage from './pages/home-page/HomePage'
@@ -32,6 +33,7 @@ function App() {
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/new-chat' element={<NewChatPage />} />
 				<Route path='/list-users-in-chat' element={<ListUsersInChatPage />} />
+				<Route path='/add-user-to-chat' element={<AddUserToChatPage />} />
 
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
