@@ -73,3 +73,8 @@ export interface IFindUser {
 export interface IFindUsers {
 	name: string
 }
+
+export interface IFindChats {
+	id: string
+	name: string
+}

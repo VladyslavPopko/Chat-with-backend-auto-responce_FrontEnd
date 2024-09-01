@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
-import { UseFindUsers } from '../../../../api/user/UseFindUsers'
+import { UseFindChats } from '../../../../api/chat/UseFindChats'
 import { useAppSelector } from '../../../../store/store'
+import { IChat } from '../../../../types/api.types'
 import { IFormSearch } from '../../../../types/form.types'
 import { IUser } from '../../../../types/user.types'
 import Input from '../../../ui/input/Input'
@@ -13,17 +14,17 @@ const MenuHeader = () => {
 	const user: IUser | null = useAppSelector(state => state.auth.user)
 	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
 	const [isSearchValue, setIsSearchValue] = useState<boolean>(false)
-	const [searchValue, setSearchValue] = useState<IUser[]>()
-	const { mutate } = UseFindUsers()
+	const [searchValue, setSearchValue] = useState<IChat[]>()
+	const { mutate } = UseFindChats()
 
-	const { register, handleSubmit, watch } = useForm<IFormSearch>()
+	const { register, handleSubmit, watch, reset } = useForm<IFormSearch>()
 
 	const searchValueForm = watch('name')
 
 	useEffect(() => {
-		if (searchValueForm?.length) {
+		if (searchValueForm?.length && user) {
 			mutate(
-				{ name: searchValueForm },
+				{ id: user.id, name: searchValueForm },
 				{
 					onSuccess: responseData => {
 						setIsSearchValue(true)
@@ -77,6 +78,7 @@ const MenuHeader = () => {
 				/>
 				{isSearchValue && (
 					<MenuHeaderList
+						reset={reset}
 						setIsSearchValue={setIsSearchValue}
 						searchValue={searchValue}
 					/>
