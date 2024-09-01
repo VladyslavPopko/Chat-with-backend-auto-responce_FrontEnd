@@ -8,7 +8,7 @@ const ListUsersInChat = () => {
 	return (
 		<div className={styles.section}>
 			{chats?.map(chat => (
-				<UserInChat userID={chat.userId} />
+				<UserInChat key={chat.id} userID={chat.userId} />
 			))}
 		</div>
 	)

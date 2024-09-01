@@ -21,6 +21,8 @@ export interface IChatUser {
 	chatId: string
 	userId: string
 	name: string
+	displayedName?: string
+	displayedAvatar?: string
 }
 
 export interface IGetUserChats {
@@ -45,6 +47,7 @@ export interface IGetChatInfo {
 
 export interface IChatDetail {
 	id: string
+	avatar?: string
 	name: string
 	createdAt: string
 	updatedAt: string

@@ -1,12 +1,46 @@
 import cn from 'classnames'
 import { Dispatch, MouseEvent, SetStateAction } from 'react'
+import { useDispatch } from 'react-redux'
+import { UseDeleteUserFromChat } from '../../../../../api/chat/UseDeleteUserFromChat'
+import { UseGetChatinfo } from '../../../../../api/chat/UseGetChatInfo'
+import { changeChat } from '../../../../../store/slices/chatSlice'
+import { AppDispatch, useAppSelector } from '../../../../../store/store'
 import styles from './UsersInChatMenu.module.scss'
 
 const UserInChatMenu = ({
 	setIsVisibleMenu,
+	userID,
 }: {
 	setIsVisibleMenu: Dispatch<SetStateAction<boolean>>
+	userID: string
 }) => {
+	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { mutate } = UseDeleteUserFromChat()
+
+	const { mutate: mutateChat } = UseGetChatinfo()
+	const chats = useAppSelector(state => state.chat.chat?.chatUsers)
+
+	const handleKick = () => {
+		if (chats) {
+			const chat = chats?.filter(chat => chat.userId === userID)
+
+			if (chat)
+				mutate(chat[0].id, {
+					onSuccess: responseData => {
+						mutateChat(
+							{ id: responseData.chatId },
+							{
+								onSuccess: responseData => {
+									dispatch(changeChat(responseData))
+									setIsVisibleMenu(false)
+								},
+							}
+						)
+					},
+				})
+		}
+	}
+
 	const handleClose = (e: MouseEvent) => {
 		e.stopPropagation()
 		setIsVisibleMenu(false)
@@ -19,7 +53,7 @@ const UserInChatMenu = ({
 			</h3>
 			<h3
 				className={cn(styles.option, styles.option_danger)}
-				onClick={handleClose}
+				onClick={handleKick}
 			>
 				Kick from chat
 			</h3>

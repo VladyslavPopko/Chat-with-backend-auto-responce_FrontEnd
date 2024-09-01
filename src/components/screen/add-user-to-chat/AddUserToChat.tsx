@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
+import { UseCreateNewChat } from '../../../api/chat/UseCreateNewChat'
 import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseFindUsers } from '../../../api/user/UseFindUsers'
 import { changeChat } from '../../../store/slices/chatSlice'
@@ -48,31 +49,65 @@ const AddUserToChat = () => {
 
 	const { mutate: mutateAddUsers } = UseAddUsersToChat()
 	const { mutate: mutateChat } = UseGetChatinfo()
+	const { mutate: mutateCreateChat } = UseCreateNewChat()
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
 	const addtoChat = () => {
-		if (chatID && users) {
-			const usersIDs = users.map(user => user.id)
+		if (!chatID) {
+			mutateCreateChat(
+				{ name: 'Private chat' },
+				{
+					onSuccess: responseData => {
+						if (users) {
+							const usersIDs = users.map(user => user.id)
 
-			const data: IAddUserToChat = {
-				chatId: chatID,
-				users: usersIDs,
-			}
-			mutateAddUsers(data, {
-				onSuccess: () => {
-					if (userID) {
-						mutateChat(
-							{ id: chatID },
-							{
-								onSuccess: responseData => {
-									dispatch(changeChat(responseData))
-									navigate('/chat')
-								},
+							const data: IAddUserToChat = {
+								chatId: responseData.id,
+								users: usersIDs,
 							}
-						)
-					}
-				},
-			})
+							mutateAddUsers(data, {
+								onSuccess: () => {
+									if (userID) {
+										mutateChat(
+											{ id: responseData.id },
+											{
+												onSuccess: responseData => {
+													dispatch(changeChat(responseData))
+													navigate('/chat')
+												},
+											}
+										)
+									}
+								},
+							})
+						}
+					},
+				}
+			)
+		} else {
+			if (users) {
+				const usersIDs = users.map(user => user.id)
+
+				const data: IAddUserToChat = {
+					chatId: chatID,
+					users: usersIDs,
+				}
+				mutateAddUsers(data, {
+					onSuccess: () => {
+						if (userID) {
+							mutateChat(
+								{ id: chatID },
+								{
+									onSuccess: responseData => {
+										dispatch(changeChat(responseData))
+										navigate('/chat')
+									},
+								}
+							)
+						}
+					},
+				})
+			}
 		}
 	}
 
@@ -84,7 +119,7 @@ const AddUserToChat = () => {
 					register={register}
 					registerName='name'
 					name='name'
-					placeholder='Search or start new chat'
+					placeholder='Search users'
 					imgLeft='/images/search.svg'
 				/>
 				{isSearchValue && (

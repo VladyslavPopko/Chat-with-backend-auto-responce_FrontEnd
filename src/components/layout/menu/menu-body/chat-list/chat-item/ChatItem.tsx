@@ -74,21 +74,27 @@ const ChatItem = (chat: IChatItem) => {
 				onClick={openChat}
 				onContextMenu={handleMenu}
 			>
-				<h2 className={styles.title}>{chatInfo?.name}</h2>
-				<h3 className={styles.text}>
-					{lastMessage ? lastMessage.text : 'No messages yet'}
-				</h3>
-				<h3 className={styles.date}>
-					{' '}
-					{lastMessage && formatDate(lastMessage.updatedAt)}
-				</h3>
+				<img
+					src={chatInfo?.avatar ? chatInfo.avatar : '/images/avatar.svg'}
+					className={styles.img}
+				/>
+				<div className={styles.content}>
+					<h2 className={styles.title}>{chatInfo?.name}</h2>
+					<h3 className={styles.text}>
+						{lastMessage ? lastMessage.text : 'No messages yet'}
+					</h3>
+					<h3 className={styles.date}>
+						{' '}
+						{lastMessage && formatDate(lastMessage.updatedAt)}
+					</h3>
 
-				{isVisibleMenu && (
-					<ChatItemMenu
-						setIsVisibleMenu={setIsVisibleMenu}
-						chatInfo={chatInfo}
-					/>
-				)}
+					{isVisibleMenu && (
+						<ChatItemMenu
+							setIsVisibleMenu={setIsVisibleMenu}
+							chatInfo={chatInfo}
+						/>
+					)}
+				</div>
 			</div>
 			<hr className={styles.hr} />
 		</>

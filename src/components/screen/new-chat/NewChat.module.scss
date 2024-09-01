@@ -8,3 +8,12 @@
 	padding: 10px;
 	border: 1px solid var(--primary-color);
 }
+.link {
+	text-align: center;
+	display: block;
+	color: var(--selected-color);
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}

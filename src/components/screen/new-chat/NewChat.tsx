@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
 import { UseCreateNewChat } from '../../../api/chat/UseCreateNewChat'
 import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
@@ -51,6 +51,10 @@ const NewChat = () => {
 		})
 	}
 
+	const onLink = () => {
+		dispatch(changeChat(null))
+	}
+
 	return (
 		<>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -71,6 +75,9 @@ const NewChat = () => {
 					text='Create New Chat'
 				/>
 			</form>
+			<NavLink onClick={onLink} className={styles.link} to='/add-user-to-chat'>
+				Create private chat
+			</NavLink>
 		</>
 	)
 }

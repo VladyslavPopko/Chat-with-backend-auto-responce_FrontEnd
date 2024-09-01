@@ -34,7 +34,9 @@ const UserInChat = ({ userID }: { userID: string }) => {
 			<h3 className={styles.text}>
 				{user?.name} {user?.surname}
 			</h3>
-			{isVisibleMenu && <UserInChatMenu setIsVisibleMenu={setIsVisibleMenu} />}
+			{isVisibleMenu && (
+				<UserInChatMenu setIsVisibleMenu={setIsVisibleMenu} userID={userID} />
+			)}
 		</div>
 	)
 }

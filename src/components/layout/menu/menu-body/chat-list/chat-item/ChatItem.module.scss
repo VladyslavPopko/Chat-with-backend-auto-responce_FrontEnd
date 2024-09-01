@@ -4,8 +4,8 @@
 	cursor: pointer;
 	position: relative;
 	display: flex;
-	flex-direction: column;
-	gap: 5px;
+	gap: 10px;
+	align-items: center;
 
 	&:hover {
 		background-color: var(--background-hover);
@@ -29,4 +29,13 @@
 .date {
 	font-size: 10px;
 	text-align: right;
+}
+.img {
+	width: 40px;
+	max-height: 40xp;
+}
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
