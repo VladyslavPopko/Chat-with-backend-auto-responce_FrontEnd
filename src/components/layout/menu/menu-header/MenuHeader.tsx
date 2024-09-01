@@ -1,21 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
+import { UseFindUsers } from '../../../../api/user/UseFindUsers'
 import { useAppSelector } from '../../../../store/store'
 import { IFormSearch } from '../../../../types/form.types'
 import { IUser } from '../../../../types/user.types'
 import Input from '../../../ui/input/Input'
 import styles from './MenuHeader.module.scss'
 import ImgMenu from './img-menu/ImgMenu'
+import MenuHeaderList from './menu-header-list/MenuHeaderList'
 const MenuHeader = () => {
 	const user: IUser | null = useAppSelector(state => state.auth.user)
 	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
+	const [isSearchValue, setIsSearchValue] = useState<boolean>(false)
+	const [searchValue, setSearchValue] = useState<IUser[]>()
+	const { mutate } = UseFindUsers()
 
-	const { register, handleSubmit } = useForm<IFormSearch>()
+	const { register, handleSubmit, watch } = useForm<IFormSearch>()
 
-	const onSubmit = (data: IFormSearch) => {
-		console.log(data)
-	}
+	const searchValueForm = watch('name')
+
+	useEffect(() => {
+		if (searchValueForm?.length) {
+			mutate(
+				{ name: searchValueForm },
+				{
+					onSuccess: responseData => {
+						setIsSearchValue(true)
+						setSearchValue(responseData)
+					},
+				}
+			)
+		} else {
+			setIsSearchValue(false)
+		}
+	}, [searchValueForm])
+
+	const onSubmit = () => {}
 
 	const handleCloseMenu = () => {
 		setIsVisibleMenu(!isVisibleMenu)
@@ -45,15 +66,21 @@ const MenuHeader = () => {
 				)}
 			</div>
 
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 				<Input<IFormSearch>
 					required={true}
 					register={register}
-					registerName='searchValue'
-					name='search'
+					registerName='name'
+					name='name'
 					placeholder='Search or start new chat'
 					imgLeft='/images/search.svg'
 				/>
+				{isSearchValue && (
+					<MenuHeaderList
+						setIsSearchValue={setIsSearchValue}
+						searchValue={searchValue}
+					/>
+				)}
 			</form>
 		</div>
 	)

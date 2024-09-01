@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { UseGetChatinfo } from '../../../../../../api/chat/UseGetChatInfo'
 import { changeChat } from '../../../../../../store/slices/chatSlice'
-import { AppDispatch } from '../../../../../../store/store'
+import { AppDispatch, useAppSelector } from '../../../../../../store/store'
 import { IChatDetail } from '../../../../../../types/api.types'
 import { IChatItem } from '../../../../../../types/chat.types'
 import styles from './ChatItem.module.scss'
@@ -12,6 +12,7 @@ import ChatItemMenu from './chat-item-menu/ChatItemMenu'
 const ChatItem = (chat: IChatItem) => {
 	const { mutate } = UseGetChatinfo()
 	const [chatInfo, setChatInfo] = useState<IChatDetail>()
+	const chatState = useAppSelector(state => state.chat.chat)
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
 
@@ -21,7 +22,7 @@ const ChatItem = (chat: IChatItem) => {
 				setChatInfo(responseData)
 			},
 		})
-	}, [])
+	}, [chatState])
 
 	const navigate = useNavigate()
 

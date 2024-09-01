@@ -11,6 +11,7 @@ const ChatList = () => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const user = useAppSelector(state => state.auth.user)
 	const chats = useAppSelector(state => state.chats.chats)
+	const chat = useAppSelector(state => state.chat.chat)
 
 	useEffect(() => {
 		if (user) {
@@ -20,7 +21,7 @@ const ChatList = () => {
 				},
 			})
 		}
-	}, [user])
+	}, [user, chat])
 
 	return (
 		<div className={styles.section}>

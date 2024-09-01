@@ -14,6 +14,12 @@ const MessageMenu = ({
 	return (
 		<div className={styles.section}>
 			<h3
+				className={cn(styles.option, styles.option_success)}
+				onClick={handleClose}
+			>
+				Mark as readed
+			</h3>
+			<h3
 				className={cn(styles.option, styles.option_warning)}
 				onClick={handleClose}
 			>

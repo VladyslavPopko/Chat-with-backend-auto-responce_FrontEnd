@@ -9,10 +9,13 @@ const ChatContent = () => {
 
 	return (
 		<div className={styles.section}>
-			{chat.messages.length &&
+			{chat.messages.length ? (
 				chat.messages.map(message => (
 					<Message key={message.id} message={message} />
-				))}
+				))
+			) : (
+				<p>No messages yet.</p>
+			)}
 		</div>
 	)
 }

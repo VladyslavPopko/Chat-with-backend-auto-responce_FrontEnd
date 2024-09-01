@@ -1,0 +1,11 @@
+.section {
+	position: absolute;
+	top: 100%;
+	background-color: var(--primary-color);
+	width: 100%;
+	border-radius: var(--section-border-radius);
+	overflow: hidden;
+}
+.text {
+	padding: 15px;
+}

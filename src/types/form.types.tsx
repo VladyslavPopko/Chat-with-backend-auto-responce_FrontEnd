@@ -3,7 +3,7 @@ export interface IFormAuth {
 	password: string
 }
 export interface IFormSearch {
-	searchValue: string
+	name: string
 }
 
 export interface IFormProfile {

@@ -69,3 +69,7 @@ export interface IMessage extends ISendMessage {
 export interface IFindUser {
 	id: string
 }
+
+export interface IFindUsers {
+	name: string
+}
