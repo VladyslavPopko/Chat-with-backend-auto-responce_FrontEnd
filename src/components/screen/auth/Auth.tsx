@@ -57,7 +57,11 @@ const Auth = () => {
 				)}
 				<Button className={styles.button} type='submit' text='Login' />
 			</form>
-			<NavLink to='/register' className={styles.button_signup}>
+			<NavLink
+				draggable={false}
+				to='/register'
+				className={styles.button_signup}
+			>
 				Sign up
 			</NavLink>
 		</>

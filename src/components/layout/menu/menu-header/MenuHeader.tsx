@@ -39,7 +39,7 @@ const MenuHeader = () => {
 				{user ? (
 					<p>{`Hello, ${user.name} ${user.surname}`} </p>
 				) : (
-					<NavLink to={'/auth'} className={styles.button}>
+					<NavLink to={'/auth'} className={styles.button} draggable={false}>
 						Log In
 					</NavLink>
 				)}

@@ -43,7 +43,12 @@ const ChatItem = (chat: IChatItem) => {
 				onContextMenu={handleMenu}
 			>
 				{chatInfo?.name}
-				{isVisibleMenu && <ChatItemMenu setIsVisibleMenu={setIsVisibleMenu} />}
+				{isVisibleMenu && (
+					<ChatItemMenu
+						setIsVisibleMenu={setIsVisibleMenu}
+						chatInfo={chatInfo}
+					/>
+				)}
 			</div>
 			<hr className={styles.hr} />
 		</>
