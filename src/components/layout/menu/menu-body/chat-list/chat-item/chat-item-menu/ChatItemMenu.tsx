@@ -28,8 +28,9 @@ const ChatItemMenu = ({
 			navigate('/list-users-in-chat')
 		}
 	}
+
 	return (
-		<div className={styles.section}>
+		<div className={cn(styles.section)}>
 			<h3
 				className={cn(styles.option, styles.option_success)}
 				onClick={handleClose}

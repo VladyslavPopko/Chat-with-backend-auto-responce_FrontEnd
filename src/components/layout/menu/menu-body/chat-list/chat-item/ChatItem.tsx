@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -36,10 +37,23 @@ const ChatItem = (chat: IChatItem) => {
 	const handleMenu = () => {
 		setIsVisibleMenu(!isVisibleMenu)
 	}
+	const [isSelected, setIsSelected] = useState<boolean>(false)
+	const checkSelected = () => {
+		console.log(chat.id, chatInfo?.id)
+		if (chatState?.id === chatInfo?.id && chatState && chatInfo) {
+			setIsSelected(true)
+		} else {
+			setIsSelected(false)
+		}
+	}
+
+	useEffect(() => {
+		checkSelected()
+	}, [chat])
 	return (
 		<>
 			<div
-				className={styles.chat}
+				className={cn(styles.chat, isSelected && styles.active)}
 				onClick={openChat}
 				onContextMenu={handleMenu}
 			>
