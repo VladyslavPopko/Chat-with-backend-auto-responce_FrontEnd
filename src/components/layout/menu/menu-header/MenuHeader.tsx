@@ -30,7 +30,7 @@ const MenuHeader = () => {
 					onClick={handleCloseMenu}
 				>
 					<img
-						src='/images/avatar.svg'
+						src={user?.avatar || '/images/avatar.svg'}
 						className={styles.img_avatar}
 						draggable='false'
 					/>
