@@ -7,11 +7,13 @@ import { AppDispatch } from '../../../../../../store/store'
 import { IChatDetail } from '../../../../../../types/api.types'
 import { IChatItem } from '../../../../../../types/chat.types'
 import styles from './ChatItem.module.scss'
+import ChatItemMenu from './chat-item-menu/ChatItemMenu'
 
 const ChatItem = (chat: IChatItem) => {
 	const { mutate } = UseGetChatinfo()
 	const [chatInfo, setChatInfo] = useState<IChatDetail>()
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
 
 	useEffect(() => {
 		mutate(chat, {
@@ -29,10 +31,19 @@ const ChatItem = (chat: IChatItem) => {
 			dispatch(changeChat(chatInfo))
 		}
 	}
+
+	const handleMenu = () => {
+		setIsVisibleMenu(!isVisibleMenu)
+	}
 	return (
 		<>
-			<div className={styles.chat} onClick={openChat}>
+			<div
+				className={styles.chat}
+				onClick={openChat}
+				onContextMenu={handleMenu}
+			>
 				{chatInfo?.name}
+				{isVisibleMenu && <ChatItemMenu setIsVisibleMenu={setIsVisibleMenu} />}
 			</div>
 			<hr className={styles.hr} />
 		</>

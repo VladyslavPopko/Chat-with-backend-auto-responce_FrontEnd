@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import AuthPage from './pages/auth-page/AuthPage'
 import ChatPage from './pages/chat-page/ChatPage'
@@ -9,6 +10,17 @@ import RegisterPage from './pages/register-page/RegisterPage'
 import './styles/global.scss'
 
 function App() {
+	useEffect(() => {
+		const handleContextMenu = (event: Event) => {
+			event.preventDefault()
+		}
+
+		document.addEventListener('contextmenu', handleContextMenu)
+
+		return () => {
+			document.removeEventListener('contextmenu', handleContextMenu)
+		}
+	}, [])
 	return (
 		<>
 			<Routes>

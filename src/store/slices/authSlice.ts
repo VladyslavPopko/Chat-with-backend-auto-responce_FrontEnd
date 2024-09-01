@@ -15,7 +15,7 @@ const authSlice = createSlice({
 			state.isAuth = payload
 		},
 
-		changeUser: (state, { payload }: PayloadAction<IUser>) => {
+		changeUser: (state, { payload }: PayloadAction<IUser | null>) => {
 			state.user = payload
 		},
 	},

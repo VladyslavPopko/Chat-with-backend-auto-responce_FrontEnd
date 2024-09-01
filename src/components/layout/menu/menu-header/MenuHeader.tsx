@@ -1,33 +1,41 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useAppSelector } from '../../../../store/store'
 import { IFormSearch } from '../../../../types/form.types'
 import { IUser } from '../../../../types/user.types'
 import Input from '../../../ui/input/Input'
 import styles from './MenuHeader.module.scss'
+import ImgMenu from './img-menu/ImgMenu'
 const MenuHeader = () => {
 	const user: IUser | null = useAppSelector(state => state.auth.user)
+	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
 
 	const { register, handleSubmit } = useForm<IFormSearch>()
-	const navigate = useNavigate()
 
 	const onSubmit = (data: IFormSearch) => {
 		console.log(data)
 	}
-	const goOnProfilePage = () => {
-		navigate('/profile')
+
+	const handleCloseMenu = () => {
+		setIsVisibleMenu(!isVisibleMenu)
 	}
 
 	return (
 		<div className={styles.section}>
 			<div className={styles.header}>
-				<img
-					onClick={goOnProfilePage}
-					src='/images/avatar.svg'
-					className={styles.img_avatar}
-					draggable='false'
-				/>
-
+				<div
+					className={styles.section_img_avatar}
+					onContextMenu={handleCloseMenu}
+					onClick={handleCloseMenu}
+				>
+					<img
+						src='/images/avatar.svg'
+						className={styles.img_avatar}
+						draggable='false'
+					/>
+					{isVisibleMenu && <ImgMenu setIsVisibleMenu={setIsVisibleMenu} />}
+				</div>
 				{user ? (
 					<p>{`Hello, ${user.name} ${user.surname}`} </p>
 				) : (
@@ -36,7 +44,7 @@ const MenuHeader = () => {
 					</NavLink>
 				)}
 			</div>
-			<NavLink to='/new-chat'>New Chat</NavLink>
+
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input<IFormSearch>
 					required={true}

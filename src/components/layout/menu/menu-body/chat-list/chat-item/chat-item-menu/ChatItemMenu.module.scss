@@ -1,0 +1,30 @@
+.section {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: var(--button-border-radius);
+	background-color: var(--primary-background);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	box-shadow: var(--primary-box-shadow);
+	border: 1px solid var(--primary-color);
+	z-index: 3;
+}
+.option {
+	padding: 10px;
+	transition: background-color var(--transition-ms), color var(--transition-ms);
+	cursor: pointer;
+	&:hover {
+		background-color: var(--selected-color);
+	}
+	&_delete:hover {
+		background-color: var(--danger-color);
+	}
+	&_warning:hover {
+		background-color: var(--warning-color);
+	}
+	&_success:hover {
+		background-color: var(--success-color);
+	}
+}

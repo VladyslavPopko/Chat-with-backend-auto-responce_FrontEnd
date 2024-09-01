@@ -6,10 +6,12 @@ import { IMessage } from '../../../../../types/api.types'
 import { IUser } from '../../../../../types/user.types'
 import { formatDate } from '../../../../../utils/formatDate'
 import styles from './Message.module.scss'
+import MessageMenu from './message-menu/MessageMenu'
 
 const Message = ({ message }: { message: IMessage }) => {
 	const user = useAppSelector(state => state.auth.user)
 	const { mutate } = UseFindUser()
+	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
 
 	const [author, setAuthor] = useState<IUser>()
 
@@ -25,16 +27,30 @@ const Message = ({ message }: { message: IMessage }) => {
 			}
 		)
 	}, [])
+
+	const handleContextMenu = () => {
+		setIsVisibleMenu(!isVisibleMenu)
+	}
+
+	const handleCloseMenu = () => {
+		setIsVisibleMenu(false)
+	}
+
 	return (
 		<>
 			<div
 				className={cn(styles.section, isMine && styles.section_other_message)}
+				onClick={handleCloseMenu}
 			>
 				<h2>
 					{author?.name} {author?.surname}
 				</h2>
-				<div className={cn(styles.content, isMine && styles.other_message)}>
+				<div
+					className={cn(styles.content, isMine && styles.other_message)}
+					onContextMenu={handleContextMenu}
+				>
 					<h3>{message.text}</h3>
+					{isVisibleMenu && <MessageMenu setIsVisibleMenu={setIsVisibleMenu} />}
 				</div>
 				<p className={styles.date}>{formatDate(message.updatedAt)}</p>{' '}
 			</div>

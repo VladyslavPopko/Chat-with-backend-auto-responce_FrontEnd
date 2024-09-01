@@ -2,6 +2,7 @@
 	padding: 25px;
 	transition: background var(--transition-ms);
 	cursor: pointer;
+	position: relative;
 
 	&:hover {
 		background-color: var(--background-hover);
