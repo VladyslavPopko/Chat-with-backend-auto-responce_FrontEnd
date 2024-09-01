@@ -18,7 +18,6 @@ const Register = () => {
 	})
 
 	const onSubmit = (data: IFormRegister) => {
-		console.log(data)
 		mutate(data, {
 			onSuccess: responseData => {
 				Cookies.set('token', responseData.token)

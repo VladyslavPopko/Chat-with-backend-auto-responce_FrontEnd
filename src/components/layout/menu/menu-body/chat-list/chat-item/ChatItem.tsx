@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { UseGetChatinfo } from '../../../../../../api/chat/UseGetChatInfo'
+import { UseFindMessage } from '../../../../../../api/message/UseFindMessage'
 import { changeChat } from '../../../../../../store/slices/chatSlice'
 import { AppDispatch, useAppSelector } from '../../../../../../store/store'
-import { IChatDetail } from '../../../../../../types/api.types'
+import { IChatDetail, IMessage } from '../../../../../../types/api.types'
 import { IChatItem } from '../../../../../../types/chat.types'
+import { formatDate } from '../../../../../../utils/formatDate'
 import styles from './ChatItem.module.scss'
 import ChatItemMenu from './chat-item-menu/ChatItemMenu'
 
@@ -16,6 +18,7 @@ const ChatItem = (chat: IChatItem) => {
 	const chatState = useAppSelector(state => state.chat.chat)
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false)
+	const [lastMessage, setLastMessage] = useState<IMessage>()
 
 	useEffect(() => {
 		mutate(chat, {
@@ -39,7 +42,6 @@ const ChatItem = (chat: IChatItem) => {
 	}
 	const [isSelected, setIsSelected] = useState<boolean>(false)
 	const checkSelected = () => {
-		console.log(chat.id, chatInfo?.id)
 		if (chatState?.id === chatInfo?.id && chatState && chatInfo) {
 			setIsSelected(true)
 		} else {
@@ -50,6 +52,21 @@ const ChatItem = (chat: IChatItem) => {
 	useEffect(() => {
 		checkSelected()
 	}, [chat])
+
+	const { mutate: mutateLastMessage } = UseFindMessage()
+
+	useEffect(() => {
+		if (chat && chatInfo && chatInfo.messages?.length) {
+			const length = chatInfo.messages.length
+			const lastMessageData = chatInfo.messages[length - 1]
+			mutateLastMessage(lastMessageData.id, {
+				onSuccess: responseData => {
+					setLastMessage(responseData)
+				},
+			})
+		}
+	}, [chatInfo])
+
 	return (
 		<>
 			<div
@@ -57,7 +74,15 @@ const ChatItem = (chat: IChatItem) => {
 				onClick={openChat}
 				onContextMenu={handleMenu}
 			>
-				{chatInfo?.name}
+				<h2 className={styles.title}>{chatInfo?.name}</h2>
+				<h3 className={styles.text}>
+					{lastMessage ? lastMessage.text : 'No messages yet'}
+				</h3>
+				<h3 className={styles.date}>
+					{' '}
+					{lastMessage && formatDate(lastMessage.updatedAt)}
+				</h3>
+
 				{isVisibleMenu && (
 					<ChatItemMenu
 						setIsVisibleMenu={setIsVisibleMenu}

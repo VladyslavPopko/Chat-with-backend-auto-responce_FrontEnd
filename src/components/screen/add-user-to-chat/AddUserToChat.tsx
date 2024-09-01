@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
+import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseFindUsers } from '../../../api/user/UseFindUsers'
+import { changeChat } from '../../../store/slices/chatSlice'
+import { AppDispatch, useAppSelector } from '../../../store/store'
+import { IAddUserToChat } from '../../../types/api.types'
 import { IFormSearch } from '../../../types/form.types'
 import { IUser } from '../../../types/user.types'
 import Button from '../../ui/button/Button'
@@ -12,6 +18,8 @@ const AddUserToChat = () => {
 	const [isSearchValue, setIsSearchValue] = useState<boolean>(false)
 	const [searchValue, setSearchValue] = useState<IUser[]>()
 	const { mutate } = UseFindUsers()
+	const chatID = useAppSelector(state => state.chat.chat?.id)
+	const userID = useAppSelector(state => state.auth.user?.id)
 
 	const { register, handleSubmit, watch } = useForm<IFormSearch>()
 	const [users, setUsers] = useState<IUser[]>()
@@ -36,8 +44,33 @@ const AddUserToChat = () => {
 
 	const onSubmit = () => {}
 
+	const { mutate: mutateAddUsers } = UseAddUsersToChat()
+	const { mutate: mutateChat } = UseGetChatinfo()
+	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+
 	const addtoChat = () => {
-		const data = {}
+		if (chatID && users) {
+			const usersIDs = users.map(user => user.id)
+
+			const data: IAddUserToChat = {
+				chatId: chatID,
+				users: usersIDs,
+			}
+			mutateAddUsers(data, {
+				onSuccess: () => {
+					if (userID) {
+						mutateChat(
+							{ id: chatID },
+							{
+								onSuccess: responseData => {
+									dispatch(changeChat(responseData))
+								},
+							}
+						)
+					}
+				},
+			})
+		}
 	}
 
 	return (
