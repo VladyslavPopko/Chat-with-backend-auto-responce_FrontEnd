@@ -1,8 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
 import { UseCreateNewChat } from '../../../api/chat/UseCreateNewChat'
+import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseGetUserChats } from '../../../api/chat/UseGetUserChats'
+import { changeChat } from '../../../store/slices/chatSlice'
 import { changeChats } from '../../../store/slices/chatsSlice'
 import { AppDispatch, useAppSelector } from '../../../store/store'
 import { IFormNewChat } from '../../../types/form.types'
@@ -18,6 +21,8 @@ const NewChat = () => {
 	const { mutate } = UseCreateNewChat()
 	const { mutate: mutateAddToChat } = UseAddUsersToChat()
 	const { mutate: mutateChats } = UseGetUserChats()
+	const { mutate: mutateChat } = UseGetChatinfo()
+	const navigate = useNavigate()
 	const { register, handleSubmit, formState } = useForm<IFormNewChat>({
 		mode: 'onChange',
 	})
@@ -33,6 +38,15 @@ const NewChat = () => {
 						},
 					})
 				}
+				mutateChat(
+					{ id: responseData.id },
+					{
+						onSuccess: responseData => {
+							dispatch(changeChat(responseData))
+							navigate('/add-user-to-chat')
+						},
+					}
+				)
 			},
 		})
 	}

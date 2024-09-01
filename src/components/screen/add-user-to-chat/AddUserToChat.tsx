@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
 import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseFindUsers } from '../../../api/user/UseFindUsers'
@@ -20,6 +21,7 @@ const AddUserToChat = () => {
 	const { mutate } = UseFindUsers()
 	const chatID = useAppSelector(state => state.chat.chat?.id)
 	const userID = useAppSelector(state => state.auth.user?.id)
+	const navigate = useNavigate()
 
 	const { register, handleSubmit, watch } = useForm<IFormSearch>()
 	const [users, setUsers] = useState<IUser[]>()
@@ -64,6 +66,7 @@ const AddUserToChat = () => {
 							{
 								onSuccess: responseData => {
 									dispatch(changeChat(responseData))
+									navigate('/chat')
 								},
 							}
 						)
