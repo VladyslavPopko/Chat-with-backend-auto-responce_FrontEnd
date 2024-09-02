@@ -61,6 +61,11 @@ const ChatItemMenu = ({
 		})
 	}
 
+	const handleChangeChat = (e: MouseEvent) => {
+		e.stopPropagation()
+		navigate('/update-chat')
+	}
+
 	return (
 		<div className={cn(styles.section)}>
 			<h3
@@ -68,6 +73,12 @@ const ChatItemMenu = ({
 				onClick={handleAddUser}
 			>
 				Add User
+			</h3>
+			<h3
+				className={cn(styles.option, styles.option_warning)}
+				onClick={handleChangeChat}
+			>
+				Update Chat
 			</h3>
 			<h3 className={cn(styles.option)} onClick={handleListUsers}>
 				List Users

@@ -78,6 +78,19 @@ const Profile = () => {
 					<ErrorMessage text={formState.errors.email.message} />
 				)}
 			</div>
+			<div className={styles.form_item}>
+				<h2 className={styles.title}>Avatar:</h2>
+				<Input<IFormProfile>
+					type='string'
+					register={register}
+					registerName='avatar'
+					placeholder='Enter link to avatar'
+					name='avatar'
+				/>
+				{formState.errors.avatar?.message && (
+					<ErrorMessage text={formState.errors.avatar.message} />
+				)}
+			</div>
 			<Button type='submit' text='Update Profile' className={styles.button} />
 		</form>
 	)

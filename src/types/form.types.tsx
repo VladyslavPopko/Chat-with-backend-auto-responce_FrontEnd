@@ -11,7 +11,7 @@ export interface IFormProfile {
 	name: string
 	surname: string
 	email: string
-	image?: string
+	avatar?: string
 }
 
 export interface IFormMessage {
@@ -33,4 +33,10 @@ export interface IPrivateUser {
 export interface IFormPrivateChat {
 	name: string
 	users: IPrivateUser[]
+}
+
+export interface IFormUpdateChat {
+	name: string
+	id: string
+	avatar?: string
 }

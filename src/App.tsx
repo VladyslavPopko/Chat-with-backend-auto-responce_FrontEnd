@@ -9,6 +9,7 @@ import NewChatPage from './pages/new-chat-page/NewChat'
 import NotFoundPage from './pages/not-found-page/NotFoundPage'
 import ProfilePage from './pages/profile-page/ProfilePage'
 import RegisterPage from './pages/register-page/RegisterPage'
+import UpdateChatPage from './pages/update-chat-page/UpdateChatPage'
 import './styles/global.scss'
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
 				<Route path='/new-chat' element={<NewChatPage />} />
 				<Route path='/list-users-in-chat' element={<ListUsersInChatPage />} />
 				<Route path='/add-user-to-chat' element={<AddUserToChatPage />} />
+				<Route path='/update-chat' element={<UpdateChatPage />} />
 
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
