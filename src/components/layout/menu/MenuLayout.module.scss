@@ -5,11 +5,25 @@
 	box-shadow: var(--primary-box-shadow);
 	height: 100dvh;
 	overflow-y: auto;
-
-	z-index: 2;
+	position: fixed;
+	background-color: var(--primary-background);
+	transition: transform var(--transition-ms);
+	transform: translateX(-350px);
+	z-index: 6;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	&::-webkit-scrollbar {
 		display: none;
+	}
+	&.active {
+		pointer-events: all;
+		transform: translateX(0);
+	}
+}
+
+@media (max-width: 480px) {
+	.section {
+		width: 250px;
+		transform: translateX(-200px);
 	}
 }

@@ -1,7 +1,8 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	margin-left: 50px;
+	width: calc(100% - 50px);
 	height: 100dvh;
 	overflow-y: auto;
 }
