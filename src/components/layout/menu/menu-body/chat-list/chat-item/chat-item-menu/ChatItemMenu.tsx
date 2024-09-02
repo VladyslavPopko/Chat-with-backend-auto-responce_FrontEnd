@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { UseDeleteUserFromChat } from '../../../../../../../api/chat/UseDeleteUserFromChat'
 import { UseGetUserChats } from '../../../../../../../api/chat/UseGetUserChats'
+import { useToast } from '../../../../../../../context/ToastContext'
 import { changeChat } from '../../../../../../../store/slices/chatSlice'
 import { changeChats } from '../../../../../../../store/slices/chatsSlice'
 import { AppDispatch, useAppSelector } from '../../../../../../../store/store'
@@ -20,6 +21,7 @@ const ChatItemMenu = ({
 	chatInfo: IChatDetail | undefined
 }) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { showToast } = useToast()
 	const userID = useAppSelector(state => state.auth.user?.id)
 	const { mutate } = UseDeleteUserFromChat()
 	const { mutate: mutateChats } = UseGetUserChats()
@@ -55,6 +57,7 @@ const ChatItemMenu = ({
 						onSuccess: responseData => {
 							dispatch(changeChats(responseData.chatUsers))
 							setIsVisibleMenu(false)
+							showToast('Leaved from chat')
 						},
 					})
 			},

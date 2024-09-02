@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { UseUpdateProfile } from '../../../api/profile/UseUpdateProfile'
+import { useToast } from '../../../context/ToastContext'
 import { changeUser } from '../../../store/slices/authSlice'
 import { AppDispatch, useAppSelector } from '../../../store/store'
 import { IFormProfile } from '../../../types/form.types'
@@ -20,8 +21,10 @@ const Profile = () => {
 			email: user?.email,
 			name: user?.name,
 			surname: user?.surname,
+			avatar: user?.avatar,
 		},
 	})
+	const { showToast } = useToast()
 
 	const onSubmit = (data: IFormProfile) => {
 		const dataForm = { ...data }
@@ -30,6 +33,7 @@ const Profile = () => {
 			mutate(dataForm, {
 				onSuccess: responseData => {
 					dispatch(changeUser(responseData))
+					showToast('Profile updated')
 				},
 			})
 		}
@@ -86,6 +90,7 @@ const Profile = () => {
 					registerName='avatar'
 					placeholder='Enter link to avatar'
 					name='avatar'
+					required={false}
 				/>
 				{formState.errors.avatar?.message && (
 					<ErrorMessage text={formState.errors.avatar.message} />

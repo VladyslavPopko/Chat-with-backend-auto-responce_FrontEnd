@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { UseGetUserChats } from '../../../api/chat/UseGetUserChats'
 import { UseUpdateChat } from '../../../api/chat/UseUpdateChat'
+import { useToast } from '../../../context/ToastContext'
 import { changeChats } from '../../../store/slices/chatsSlice'
 import { AppDispatch, useAppSelector } from '../../../store/store'
 import { IFormUpdateChat } from '../../../types/form.types'
@@ -24,6 +25,7 @@ const UpdateChat = () => {
 		},
 	})
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { showToast } = useToast()
 
 	const onSubmit = (data: IFormUpdateChat) => {
 		if (chat) {
@@ -35,6 +37,7 @@ const UpdateChat = () => {
 						mutateChats(userID, {
 							onSuccess: responseData => {
 								dispatch(changeChats(responseData.chatUsers))
+								showToast('Chat updated')
 							},
 						})
 				},

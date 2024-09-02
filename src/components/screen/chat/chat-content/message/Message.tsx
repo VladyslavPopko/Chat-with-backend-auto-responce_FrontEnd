@@ -67,7 +67,7 @@ const Message = ({ message }: { message: IMessage }) => {
 				<p className={styles.date}>
 					{message.isRead ? 'readed ' : 'not readed '}
 					{formatDate(message.updatedAt)}
-				</p>{' '}
+				</p>
 			</div>
 		</>
 	)

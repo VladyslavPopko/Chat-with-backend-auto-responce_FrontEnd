@@ -5,6 +5,7 @@ import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
 import { UseCreateNewChat } from '../../../api/chat/UseCreateNewChat'
 import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseGetUserChats } from '../../../api/chat/UseGetUserChats'
+import { useToast } from '../../../context/ToastContext'
 import { changeChat } from '../../../store/slices/chatSlice'
 import { changeChats } from '../../../store/slices/chatsSlice'
 import { AppDispatch, useAppSelector } from '../../../store/store'
@@ -26,6 +27,7 @@ const NewChat = () => {
 	const { register, handleSubmit, formState } = useForm<IFormNewChat>({
 		mode: 'onChange',
 	})
+	const { showToast } = useToast()
 
 	const onSubmit = (data: IFormNewChat) => {
 		mutate(data, {
@@ -44,6 +46,7 @@ const NewChat = () => {
 						onSuccess: responseData => {
 							dispatch(changeChat(responseData))
 							navigate('/add-user-to-chat')
+							showToast('Chat created')
 						},
 					}
 				)

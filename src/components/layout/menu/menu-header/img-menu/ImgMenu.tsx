@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import { Dispatch, MouseEvent, SetStateAction } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useToast } from '../../../../../context/ToastContext'
 import { changeIsAuth, changeUser } from '../../../../../store/slices/authSlice'
 import { changeChat } from '../../../../../store/slices/chatSlice'
 import { changeChats } from '../../../../../store/slices/chatsSlice'
@@ -14,6 +15,8 @@ const ImgMenu = ({
 }: {
 	setIsVisibleMenu: Dispatch<SetStateAction<boolean>>
 }) => {
+	const { showToast } = useToast()
+	const userName = useAppSelector(state => state.auth.user?.name)
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const navigate = useNavigate()
 	const handleClose = (e: MouseEvent) => {
@@ -40,6 +43,7 @@ const ImgMenu = ({
 		dispatch(changeChat(null))
 		dispatch(changeChats(null))
 		Cookies.remove('token')
+		showToast(`Bye, ${userName}`)
 	}
 	const isAuth = useAppSelector(state => state.auth.isAuth)
 	return (

@@ -6,6 +6,7 @@ import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
 import { UserCreatePrivateChat } from '../../../api/chat/UseCreatePrivateChat'
 import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseFindUsers } from '../../../api/user/UseFindUsers'
+import { useToast } from '../../../context/ToastContext'
 import { changeChat } from '../../../store/slices/chatSlice'
 import { AppDispatch, useAppSelector } from '../../../store/store'
 import { IAddUserToChat } from '../../../types/api.types'
@@ -51,6 +52,7 @@ const AddUserToChat = () => {
 	const { mutate: mutateChat } = UseGetChatinfo()
 	const { mutate: mutateCreateChat } = UserCreatePrivateChat()
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { showToast } = useToast()
 
 	const addtoChat = () => {
 		if (!chatID) {
@@ -79,6 +81,7 @@ const AddUserToChat = () => {
 									onSuccess: responseData => {
 										dispatch(changeChat(responseData))
 										navigate('/chat')
+										showToast('Users added')
 									},
 								}
 							)
@@ -102,6 +105,7 @@ const AddUserToChat = () => {
 									onSuccess: responseData => {
 										dispatch(changeChat(responseData))
 										navigate('/chat')
+										showToast('Users added')
 									},
 								}
 							)
