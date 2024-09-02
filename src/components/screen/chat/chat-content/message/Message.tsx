@@ -57,7 +57,12 @@ const Message = ({ message }: { message: IMessage }) => {
 					onContextMenu={handleContextMenu}
 				>
 					<h3>{message.text}</h3>
-					{isVisibleMenu && <MessageMenu setIsVisibleMenu={setIsVisibleMenu} />}
+					{isVisibleMenu && (
+						<MessageMenu
+							message={message}
+							setIsVisibleMenu={setIsVisibleMenu}
+						/>
+					)}
 				</div>
 				<p className={styles.date}>{formatDate(message.updatedAt)}</p>{' '}
 			</div>

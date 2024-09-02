@@ -102,6 +102,7 @@ const ChatItem = ({ chat }: { chat: IChatUser }) => {
 						<ChatItemMenu
 							setIsVisibleMenu={setIsVisibleMenu}
 							chatInfo={chatInfo}
+							chat={chat}
 						/>
 					)}
 				</div>
