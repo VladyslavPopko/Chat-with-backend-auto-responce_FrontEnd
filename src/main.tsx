@@ -5,18 +5,21 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
+import { ToastProvider } from './context/ToastContext.tsx'
 import { store } from './store/store.ts'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<Provider store={store}>
-			<QueryClientProvider client={queryClient}>
-				<ReactQueryDevtools initialIsOpen={false} />
-				<BrowserRouter>
-					<App />
-				</BrowserRouter>
-			</QueryClientProvider>
-		</Provider>
+		<ToastProvider>
+			<Provider store={store}>
+				<QueryClientProvider client={queryClient}>
+					<ReactQueryDevtools initialIsOpen={false} />
+					<BrowserRouter>
+						<App />
+					</BrowserRouter>
+				</QueryClientProvider>
+			</Provider>
+		</ToastProvider>
 	</StrictMode>
 )

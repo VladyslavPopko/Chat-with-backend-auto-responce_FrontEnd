@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { UseLogin } from '../../../api/auth/UseLogin'
+import { useToast } from '../../../context/ToastContext'
 import { changeIsAuth, changeUser } from '../../../store/slices/authSlice'
 import { AppDispatch } from '../../../store/store'
 import { IFormAuth } from '../../../types/form.types'
@@ -25,10 +26,12 @@ const Auth = () => {
 				Cookies.set('token', responseData.data.token)
 				dispatch(changeIsAuth(true))
 				dispatch(changeUser(responseData.data.user))
+				showToast(`Hello, ${responseData.data.user.name}`)
 				navigate('/')
 			},
 		})
 	}
+	const { showToast } = useToast()
 
 	return (
 		<>
