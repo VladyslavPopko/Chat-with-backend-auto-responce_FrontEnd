@@ -25,3 +25,12 @@ export interface IFormRegister extends IFormProfile {
 export interface IFormNewChat {
 	name: string
 }
+export interface IPrivateUser {
+	userId: string
+	name: string
+	avatar?: string
+}
+export interface IFormPrivateChat {
+	name: string
+	users: IPrivateUser[]
+}

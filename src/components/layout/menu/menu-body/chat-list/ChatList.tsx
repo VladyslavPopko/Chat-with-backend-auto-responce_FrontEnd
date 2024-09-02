@@ -26,7 +26,7 @@ const ChatList = () => {
 	return (
 		<div className={styles.section}>
 			{chats?.map(chat => (
-				<ChatItem key={chat.id} id={chat.chatId} />
+				<ChatItem key={chat.id} chat={chat} />
 			))}
 		</div>
 	)

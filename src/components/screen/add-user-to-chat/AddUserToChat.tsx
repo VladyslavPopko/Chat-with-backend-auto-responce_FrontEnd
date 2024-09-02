@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { UseAddUsersToChat } from '../../../api/chat/UseAddUsersToChat'
-import { UseCreateNewChat } from '../../../api/chat/UseCreateNewChat'
+import { UserCreatePrivateChat } from '../../../api/chat/UseCreatePrivateChat'
 import { UseGetChatinfo } from '../../../api/chat/UseGetChatInfo'
 import { UseFindUsers } from '../../../api/user/UseFindUsers'
 import { changeChat } from '../../../store/slices/chatSlice'
@@ -49,41 +49,42 @@ const AddUserToChat = () => {
 
 	const { mutate: mutateAddUsers } = UseAddUsersToChat()
 	const { mutate: mutateChat } = UseGetChatinfo()
-	const { mutate: mutateCreateChat } = UseCreateNewChat()
+	const { mutate: mutateCreateChat } = UserCreatePrivateChat()
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
 	const addtoChat = () => {
 		if (!chatID) {
-			mutateCreateChat(
-				{ name: 'Private chat' },
-				{
-					onSuccess: responseData => {
-						if (users) {
-							const usersIDs = users.map(user => user.id)
-
-							const data: IAddUserToChat = {
-								chatId: responseData.id,
-								users: usersIDs,
-							}
-							mutateAddUsers(data, {
-								onSuccess: () => {
-									if (userID) {
-										mutateChat(
-											{ id: responseData.id },
-											{
-												onSuccess: responseData => {
-													dispatch(changeChat(responseData))
-													navigate('/chat')
-												},
-											}
-										)
-									}
-								},
-							})
-						}
+			if (users)
+				mutateCreateChat(
+					{
+						name: 'Private chat',
+						users: [
+							{
+								userId: users[0].id,
+								name: `${users[0].name} ${users[0].surname}`,
+								avatar: users[0].avatar,
+							},
+							{
+								userId: users[1].id,
+								name: `${users[1].name} ${users[1].surname}`,
+								avatar: users[1].avatar,
+							},
+						],
 					},
-				}
-			)
+					{
+						onSuccess: responseData => {
+							mutateChat(
+								{ id: responseData.id },
+								{
+									onSuccess: responseData => {
+										dispatch(changeChat(responseData))
+										navigate('/chat')
+									},
+								}
+							)
+						},
+					}
+				)
 		} else {
 			if (users) {
 				const usersIDs = users.map(user => user.id)
