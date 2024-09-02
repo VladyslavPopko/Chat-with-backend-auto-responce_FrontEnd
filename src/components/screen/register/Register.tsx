@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { UseRegister } from '../../../api/register/UseRegister'
+import { useToast } from '../../../context/ToastContext'
 import { changeIsAuth, changeUser } from '../../../store/slices/authSlice'
 import { AppDispatch } from '../../../store/store'
 import { IFormRegister } from '../../../types/form.types'
@@ -13,9 +15,11 @@ import styles from './Register.module.scss'
 const Register = () => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const { mutate } = UseRegister()
+	const navigate = useNavigate()
 	const { register, handleSubmit, formState } = useForm<IFormRegister>({
 		mode: 'onChange',
 	})
+	const { showToast } = useToast()
 
 	const onSubmit = (data: IFormRegister) => {
 		mutate(data, {
@@ -23,6 +27,8 @@ const Register = () => {
 				Cookies.set('token', responseData.token)
 				dispatch(changeIsAuth(true))
 				dispatch(changeUser(responseData.user))
+				showToast(`Hello, ${responseData.user.name}`)
+				navigate('/')
 			},
 		})
 	}

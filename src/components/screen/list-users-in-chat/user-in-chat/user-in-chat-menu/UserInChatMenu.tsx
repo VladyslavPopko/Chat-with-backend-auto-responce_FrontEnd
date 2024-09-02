@@ -3,6 +3,7 @@ import { Dispatch, MouseEvent, SetStateAction } from 'react'
 import { useDispatch } from 'react-redux'
 import { UseDeleteUserFromChat } from '../../../../../api/chat/UseDeleteUserFromChat'
 import { UseGetChatinfo } from '../../../../../api/chat/UseGetChatInfo'
+import { useToast } from '../../../../../context/ToastContext'
 import { changeChat } from '../../../../../store/slices/chatSlice'
 import { AppDispatch, useAppSelector } from '../../../../../store/store'
 import styles from './UsersInChatMenu.module.scss'
@@ -16,6 +17,7 @@ const UserInChatMenu = ({
 }) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
 	const { mutate } = UseDeleteUserFromChat()
+	const { showToast } = useToast()
 
 	const { mutate: mutateChat } = UseGetChatinfo()
 	const chats = useAppSelector(state => state.chat.chat?.chatUsers)
@@ -33,6 +35,7 @@ const UserInChatMenu = ({
 								onSuccess: responseData => {
 									dispatch(changeChat(responseData))
 									setIsVisibleMenu(false)
+									showToast('User kicked')
 								},
 							}
 						)
