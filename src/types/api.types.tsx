@@ -81,3 +81,8 @@ export interface IFindChats {
 	id: string
 	name: string
 }
+
+export interface IUpdateMessageIsRead {
+	id: string
+	isRead: boolean
+}

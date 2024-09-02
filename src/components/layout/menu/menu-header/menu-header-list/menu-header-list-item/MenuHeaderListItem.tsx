@@ -1,11 +1,17 @@
-import { Dispatch, MouseEvent, SetStateAction } from 'react'
+import {
+	Dispatch,
+	MouseEvent,
+	SetStateAction,
+	useEffect,
+	useState,
+} from 'react'
 import { UseFormReset } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { UseGetChatinfo } from '../../../../../../api/chat/UseGetChatInfo'
 import { changeChat } from '../../../../../../store/slices/chatSlice'
-import { AppDispatch } from '../../../../../../store/store'
-import { IChat } from '../../../../../../types/api.types'
+import { AppDispatch, useAppSelector } from '../../../../../../store/store'
+import { IChat, IChatDetail } from '../../../../../../types/api.types'
 import { IFormSearch } from '../../../../../../types/form.types'
 import styles from './MenuHeaderListItem.module.scss'
 
@@ -19,8 +25,27 @@ const MenuHeaderListItem = ({
 	setIsSearchValue: Dispatch<SetStateAction<boolean>>
 }) => {
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const userID = useAppSelector(state => state.auth.user?.id)
 	const { mutate } = UseGetChatinfo()
 	const navigate = useNavigate()
+	const [chatInfo, setChatInfo] = useState<IChatDetail>()
+
+	let chatName
+	if (chatInfo && userID) {
+		chatName = chatInfo.chatUsers.filter(chat => chat.userId === userID)[0]
+			.displayedName
+	}
+
+	useEffect(() => {
+		mutate(
+			{ id: chat.id },
+			{
+				onSuccess: responseData => {
+					setChatInfo(responseData)
+				},
+			}
+		)
+	}, [])
 
 	const openChat = (e: MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()
@@ -29,9 +54,9 @@ const MenuHeaderListItem = ({
 			{ id: chat.id },
 			{
 				onSuccess: responseData => {
-					navigate('/chat')
 					dispatch(changeChat(responseData))
 					setIsSearchValue(false)
+					navigate('/chat')
 					reset()
 				},
 			}
@@ -40,7 +65,7 @@ const MenuHeaderListItem = ({
 
 	return (
 		<div className={styles.section} onClick={openChat}>
-			<h3 className={styles.text}>{chat.name}</h3>
+			<h3 className={styles.text}>{chatName ? chatName : chat.name}</h3>
 		</div>
 	)
 }

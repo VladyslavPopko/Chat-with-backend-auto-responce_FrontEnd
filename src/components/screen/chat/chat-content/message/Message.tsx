@@ -64,7 +64,10 @@ const Message = ({ message }: { message: IMessage }) => {
 						/>
 					)}
 				</div>
-				<p className={styles.date}>{formatDate(message.updatedAt)}</p>{' '}
+				<p className={styles.date}>
+					{message.isRead ? 'readed ' : 'not readed '}
+					{formatDate(message.updatedAt)}
+				</p>{' '}
 			</div>
 		</>
 	)

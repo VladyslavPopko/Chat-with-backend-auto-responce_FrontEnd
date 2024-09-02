@@ -1,0 +1,20 @@
+.section {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 99;
+	padding: 15px;
+	background-color: var(--selected-color);
+	border-radius: var(--button-border-radius);
+	box-shadow: var(--primary-box-shadow);
+	margin: 15px;
+	opacity: 0;
+	pointer-events: none;
+	color: var(--secondary-color);
+	transition: transform var(--transition-ms), opacity var(--transition-ms);
+	transform: translateX(100%);
+	&.active {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}

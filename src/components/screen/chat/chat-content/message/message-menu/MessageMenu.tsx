@@ -3,6 +3,7 @@ import { Dispatch, MouseEvent, SetStateAction } from 'react'
 import { useDispatch } from 'react-redux'
 import { UseGetChatinfo } from '../../../../../../api/chat/UseGetChatInfo'
 import { USeDeleteMessage } from '../../../../../../api/message/UseDeleteMessage'
+import { UseUpdateReadMessage } from '../../../../../../api/message/UseUpdateReadMessage'
 import { changeChat } from '../../../../../../store/slices/chatSlice'
 import { AppDispatch, useAppSelector } from '../../../../../../store/store'
 import { IMessage } from '../../../../../../types/api.types'
@@ -40,13 +41,37 @@ const MessageMenu = ({
 			},
 		})
 	}
+
+	const { mutate: mutateUpdateRead } = UseUpdateReadMessage()
+
+	const handleUpdateRead = (e: MouseEvent) => {
+		e.stopPropagation()
+		mutateUpdateRead(
+			{ id: message.id, isRead: !message.isRead },
+			{
+				onSuccess: () => {
+					if (chatID)
+						mutateChat(
+							{ id: chatID },
+							{
+								onSuccess: responseData => {
+									dispatch(changeChat(responseData))
+									setIsVisibleMenu(false)
+								},
+							}
+						)
+				},
+			}
+		)
+	}
+
 	return (
 		<div className={styles.section}>
 			<h3
 				className={cn(styles.option, styles.option_success)}
-				onClick={handleClose}
+				onClick={handleUpdateRead}
 			>
-				Mark as readed
+				Mark as {message.isRead ? 'not readed' : 'readed'}
 			</h3>
 			<h3
 				className={cn(styles.option, styles.option_warning)}
