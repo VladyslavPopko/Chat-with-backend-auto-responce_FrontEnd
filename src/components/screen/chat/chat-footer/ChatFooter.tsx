@@ -2,9 +2,10 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { UseGetChatinfo } from '../../../../api/chat/UseGetChatInfo'
 import { UseSendMessage } from '../../../../api/chat/UseSendMessage'
+import useSocket from '../../../../hooks/UseSocket'
 import { changeChat } from '../../../../store/slices/chatSlice'
 import { AppDispatch, useAppSelector } from '../../../../store/store'
-import { ISendMessage } from '../../../../types/api.types'
+import { IMessage, ISendMessage } from '../../../../types/api.types'
 import { IFormMessage } from '../../../../types/form.types'
 import Input from '../../../ui/input/Input'
 import styles from './ChatFooter.module.scss'
@@ -16,9 +17,25 @@ const ChatFooter = () => {
 	const { mutate } = UseSendMessage()
 	const { mutate: mutateChat } = UseGetChatinfo()
 	const dispatch: AppDispatch = useDispatch<AppDispatch>()
+	const { sendMessage } = useSocket('http://localhost:8080')
 
 	const onSubmit = (text: IFormMessage) => {
 		if (user && chat) {
+			if (text.message.trim()) {
+				const message: IMessage = {
+					id: Date.now().toString(),
+					text: text.message,
+					senderId: user.id,
+					recipientId:
+						chat.chatUsers.filter(chat => chat.userId !== user.id)[0].userId ||
+						'',
+					chatId: chat.id,
+					isRead: false,
+					createdAt: new Date().toISOString(),
+					updatedAt: new Date().toISOString(),
+				}
+				sendMessage(message)
+			}
 			const data: ISendMessage = {
 				text: text.message,
 				senderId: user.id,

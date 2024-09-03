@@ -9,7 +9,7 @@ import Button from '../../ui/button/Button'
 import ErrorMessage from '../../ui/error-message/ErorrMessage'
 import Input from '../../ui/input/Input'
 import styles from './Auth.module.scss'
-import { onSubmit } from './auth.services'
+import { onSubmit } from './Auth.services'
 
 const Auth = () => {
 	const { register, handleSubmit, formState } = useForm<IFormAuth>({

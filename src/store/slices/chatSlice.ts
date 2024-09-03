@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IChatDetail } from '../../types/api.types'
+import { IChatDetail, IMessage } from '../../types/api.types'
 import { IChatSlice } from '../../types/store.types'
 
 const initialState: IChatSlice = {
@@ -13,8 +13,13 @@ const chatSlice = createSlice({
 		changeChat: (state, { payload }: PayloadAction<IChatDetail | null>) => {
 			state.chat = payload
 		},
+		addMessage(state, action: PayloadAction<IMessage>) {
+			if (state.chat) {
+				state.chat.messages.push(action.payload)
+			}
+		},
 	},
 })
 
-export const { changeChat } = chatSlice.actions
+export const { changeChat, addMessage } = chatSlice.actions
 export default chatSlice.reducer
