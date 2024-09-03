@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import { IUser } from '../../../../../types/user.types'
+import { addToUsers } from './UserListIme.services'
 import styles from './UserListItem.module.scss'
 
 const UserListItem = ({
@@ -11,16 +12,11 @@ const UserListItem = ({
 	users: IUser[] | undefined
 	setUsers: Dispatch<SetStateAction<IUser[] | undefined>>
 }) => {
-	const addToUsers = () => {
-		if (users) {
-			const usersData = [...users, user]
-			setUsers(usersData)
-		} else {
-			setUsers([user])
-		}
-	}
 	return (
-		<div className={styles.section} onClick={addToUsers}>
+		<div
+			className={styles.section}
+			onClick={() => addToUsers(user, users, setUsers)}
+		>
 			<img
 				src={user?.avatar ? user.avatar : '/images/avatar.svg'}
 				className={styles.img}

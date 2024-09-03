@@ -1,41 +1,34 @@
-import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { UseLogin } from '../../../api/auth/UseLogin'
 import { useToast } from '../../../context/ToastContext'
-import { changeIsAuth, changeUser } from '../../../store/slices/authSlice'
 import { AppDispatch } from '../../../store/store'
 import { IFormAuth } from '../../../types/form.types'
 import Button from '../../ui/button/Button'
 import ErrorMessage from '../../ui/error-message/ErorrMessage'
 import Input from '../../ui/input/Input'
 import styles from './Auth.module.scss'
+import { onSubmit } from './auth.services'
 
 const Auth = () => {
-	const dispatch: AppDispatch = useDispatch<AppDispatch>()
-	const navigate = useNavigate()
-	const { mutate } = UseLogin()
 	const { register, handleSubmit, formState } = useForm<IFormAuth>({
 		mode: 'onChange',
 	})
 
-	const onSubmit = (data: IFormAuth) => {
-		mutate(data, {
-			onSuccess: responseData => {
-				Cookies.set('token', responseData.data.token)
-				dispatch(changeIsAuth(true))
-				dispatch(changeUser(responseData.data.user))
-				showToast(`Hello, ${responseData.data.user.name}`)
-				navigate('/')
-			},
-		})
-	}
 	const { showToast } = useToast()
+	const dispatch = useDispatch<AppDispatch>()
+	const navigate = useNavigate()
+	const { mutate } = UseLogin()
 
 	return (
 		<>
-			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+			<form
+				className={styles.form}
+				onSubmit={handleSubmit(data =>
+					onSubmit(data, dispatch, mutate, navigate, showToast)
+				)}
+			>
 				<Input<IFormAuth>
 					type='text'
 					register={register}

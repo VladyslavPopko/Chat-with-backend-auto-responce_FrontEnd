@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 import { IUser } from '../../../../types/user.types'
-import styles from './UserList.module.scss'
 import UserListItem from './user-list-item/UserListItem'
+import styles from './UserList.module.scss'
+import { handleClose } from './UserList.services'
 
 const UserList = ({
 	setIsSearchValue,
@@ -14,12 +15,11 @@ const UserList = ({
 	searchValue: IUser[] | undefined
 	users: IUser[] | undefined
 }) => {
-	const handleClose = () => {
-		setIsSearchValue(false)
-	}
-
 	return (
-		<div className={styles.section} onClick={handleClose}>
+		<div
+			className={styles.section}
+			onClick={() => handleClose(setIsSearchValue)}
+		>
 			{searchValue?.length ? (
 				searchValue?.map(user => (
 					<UserListItem user={user} users={users} setUsers={setUsers} />

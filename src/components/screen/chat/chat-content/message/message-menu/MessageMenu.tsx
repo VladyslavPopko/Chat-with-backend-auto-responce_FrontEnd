@@ -10,9 +10,11 @@ import { IMessage } from '../../../../../../types/api.types'
 import styles from './MessageMenu.module.scss'
 
 const MessageMenu = ({
+	isVisibleMenu,
 	message,
 	setIsVisibleMenu,
 }: {
+	isVisibleMenu: boolean
 	message: IMessage
 	setIsVisibleMenu: Dispatch<SetStateAction<boolean>>
 }) => {
@@ -66,7 +68,7 @@ const MessageMenu = ({
 	}
 
 	return (
-		<div className={styles.section}>
+		<div className={cn(styles.section, isVisibleMenu && styles.active)}>
 			<h3
 				className={cn(styles.option, styles.option_success)}
 				onClick={handleUpdateRead}

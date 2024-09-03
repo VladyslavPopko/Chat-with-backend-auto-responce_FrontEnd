@@ -15,7 +15,9 @@ const ChatItemMenu = ({
 	setIsVisibleMenu,
 	chatInfo,
 	chat,
+	isVisibleMenu,
 }: {
+	isVisibleMenu: boolean
 	chat: IChatUser
 	setIsVisibleMenu: Dispatch<SetStateAction<boolean>>
 	chatInfo: IChatDetail | undefined
@@ -70,7 +72,7 @@ const ChatItemMenu = ({
 	}
 
 	return (
-		<div className={cn(styles.section)}>
+		<div className={cn(styles.section, isVisibleMenu && styles.active)}>
 			<h3
 				className={cn(styles.option, styles.option_success)}
 				onClick={handleAddUser}

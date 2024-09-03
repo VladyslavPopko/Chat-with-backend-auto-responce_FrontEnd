@@ -11,15 +11,15 @@ const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<ToastProvider>
+		<QueryClientProvider client={queryClient}>
 			<Provider store={store}>
-				<QueryClientProvider client={queryClient}>
-					<ReactQueryDevtools initialIsOpen={false} />
-					<BrowserRouter>
+				<BrowserRouter>
+					<ToastProvider>
 						<App />
-					</BrowserRouter>
-				</QueryClientProvider>
+					</ToastProvider>
+					<ReactQueryDevtools initialIsOpen={false} />
+				</BrowserRouter>
 			</Provider>
-		</ToastProvider>
+		</QueryClientProvider>
 	</StrictMode>
 )

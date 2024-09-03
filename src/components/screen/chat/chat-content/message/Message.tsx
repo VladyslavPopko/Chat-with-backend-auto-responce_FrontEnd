@@ -54,15 +54,16 @@ const Message = ({ message }: { message: IMessage }) => {
 				</div>
 				<div
 					className={cn(styles.content, isMine && styles.other_message)}
+					onTouchStart={handleContextMenu}
 					onContextMenu={handleContextMenu}
 				>
 					<h3>{message.text}</h3>
-					{isVisibleMenu && (
-						<MessageMenu
-							message={message}
-							setIsVisibleMenu={setIsVisibleMenu}
-						/>
-					)}
+
+					<MessageMenu
+						message={message}
+						setIsVisibleMenu={setIsVisibleMenu}
+						isVisibleMenu={isVisibleMenu}
+					/>
 				</div>
 				<p className={styles.date}>
 					{message.isRead ? 'readed ' : 'not readed '}

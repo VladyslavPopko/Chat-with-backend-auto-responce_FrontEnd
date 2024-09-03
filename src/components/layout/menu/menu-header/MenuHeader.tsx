@@ -56,7 +56,10 @@ const MenuHeader = () => {
 						className={styles.img_avatar}
 						draggable='false'
 					/>
-					{isVisibleMenu && <ImgMenu setIsVisibleMenu={setIsVisibleMenu} />}
+					<ImgMenu
+						isVisibleMenu={isVisibleMenu}
+						setIsVisibleMenu={setIsVisibleMenu}
+					/>
 				</div>
 				{user ? (
 					<p>{`Hello, ${user.name} ${user.surname}`} </p>

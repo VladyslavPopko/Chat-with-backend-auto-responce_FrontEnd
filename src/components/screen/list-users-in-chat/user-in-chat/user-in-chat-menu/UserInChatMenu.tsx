@@ -6,12 +6,15 @@ import { UseGetChatinfo } from '../../../../../api/chat/UseGetChatInfo'
 import { useToast } from '../../../../../context/ToastContext'
 import { changeChat } from '../../../../../store/slices/chatSlice'
 import { AppDispatch, useAppSelector } from '../../../../../store/store'
+import { handleClose } from './UseInChatMenu.services'
 import styles from './UsersInChatMenu.module.scss'
 
 const UserInChatMenu = ({
 	setIsVisibleMenu,
 	userID,
+	isVisibleMenu,
 }: {
+	isVisibleMenu: boolean
 	setIsVisibleMenu: Dispatch<SetStateAction<boolean>>
 	userID: string
 }) => {
@@ -44,14 +47,14 @@ const UserInChatMenu = ({
 		}
 	}
 
-	const handleClose = (e: MouseEvent) => {
-		e.stopPropagation()
-		setIsVisibleMenu(false)
-	}
-
 	return (
-		<div className={styles.section}>
-			<h3 className={cn(styles.option)} onClick={handleClose}>
+		<div className={cn(styles.section, isVisibleMenu && styles.active)}>
+			<h3
+				className={cn(styles.option)}
+				onClick={(e: MouseEvent<HTMLHeadingElement>) =>
+					handleClose(e, setIsVisibleMenu)
+				}
+			>
 				Open profile
 			</h3>
 			<h3
@@ -60,7 +63,12 @@ const UserInChatMenu = ({
 			>
 				Kick from chat
 			</h3>
-			<h3 className={styles.option} onClick={handleClose}>
+			<h3
+				className={styles.option}
+				onClick={(e: MouseEvent<HTMLHeadingElement>) =>
+					handleClose(e, setIsVisibleMenu)
+				}
+			>
 				Close
 			</h3>
 		</div>

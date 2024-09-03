@@ -98,13 +98,12 @@ const ChatItem = ({ chat }: { chat: IChatUser }) => {
 						{lastMessage ? lastMessage.text : 'No messages yet'}
 					</h3>
 
-					{isVisibleMenu && (
-						<ChatItemMenu
-							setIsVisibleMenu={setIsVisibleMenu}
-							chatInfo={chatInfo}
-							chat={chat}
-						/>
-					)}
+					<ChatItemMenu
+						setIsVisibleMenu={setIsVisibleMenu}
+						chatInfo={chatInfo}
+						chat={chat}
+						isVisibleMenu={isVisibleMenu}
+					/>
 				</div>
 				<h3 className={styles.date}>
 					{lastMessage && formatDate(lastMessage.updatedAt)}

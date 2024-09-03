@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { UseFindUser } from '../../../../api/user/UseFindUser'
 import { IUser } from '../../../../types/user.types'
-import styles from './UserInChat.module.scss'
 import UserInChatMenu from './user-in-chat-menu/UserInChatMenu'
+import styles from './UserInChat.module.scss'
+import { handleMenu } from './UserInChat.services'
 
 const UserInChat = ({ userID }: { userID: string }) => {
 	const { mutate } = UseFindUser()
@@ -20,12 +21,11 @@ const UserInChat = ({ userID }: { userID: string }) => {
 		)
 	}, [])
 
-	const handleMenu = () => {
-		setIsVisibleMenu(!isVisibleMenu)
-	}
-
 	return (
-		<div className={styles.section} onContextMenu={handleMenu}>
+		<div
+			className={styles.section}
+			onContextMenu={() => handleMenu(isVisibleMenu, setIsVisibleMenu)}
+		>
 			<img
 				className={styles.img}
 				src={user?.avatar || '/images/avatar.svg'}
@@ -34,9 +34,12 @@ const UserInChat = ({ userID }: { userID: string }) => {
 			<h3 className={styles.text}>
 				{user?.name} {user?.surname}
 			</h3>
-			{isVisibleMenu && (
-				<UserInChatMenu setIsVisibleMenu={setIsVisibleMenu} userID={userID} />
-			)}
+
+			<UserInChatMenu
+				setIsVisibleMenu={setIsVisibleMenu}
+				userID={userID}
+				isVisibleMenu={isVisibleMenu}
+			/>
 		</div>
 	)
 }

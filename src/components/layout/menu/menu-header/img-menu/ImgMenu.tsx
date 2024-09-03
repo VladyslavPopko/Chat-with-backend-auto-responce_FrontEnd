@@ -12,7 +12,9 @@ import styles from './ImgMenu.module.scss'
 
 const ImgMenu = ({
 	setIsVisibleMenu,
+	isVisibleMenu,
 }: {
+	isVisibleMenu: boolean
 	setIsVisibleMenu: Dispatch<SetStateAction<boolean>>
 }) => {
 	const { showToast } = useToast()
@@ -47,7 +49,7 @@ const ImgMenu = ({
 	}
 	const isAuth = useAppSelector(state => state.auth.isAuth)
 	return (
-		<div className={styles.section}>
+		<div className={cn(styles.section, isVisibleMenu && styles.active)}>
 			{isAuth && (
 				<>
 					<h3 className={cn(styles.option)} onClick={handleAddNewChat}>
